@@ -54,13 +54,12 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(201);
           response.body.should.be.a('object');
-          console.log(response.body)
           response.body.should.have.property('id');
           done();
       });
     });
 
-    xit('should not create a record with missing data', done => {
+    it('should not create a record with missing data', done => {
       chai.request(server)
         .post('/api/v1/foods')
         .send({
@@ -69,7 +68,22 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(422);
           response.body.error.should.equal(
-            `Expected format: { name: <string>, calories: <integer> }. You're missing "integer" property.`
+            `Expected format: { name: <string>, calories: <integer> }. You are missing a "calories property."`
+          );
+          done();
+      });
+    });
+    
+    it('should not create a record with missing data', done => {
+      chai.request(server)
+        .post('/api/v1/foods')
+        .send({
+          calories: 200
+        })
+        .end((err, response) => {
+          response.should.have.status(422);
+          response.body.error.should.equal(
+            `Expected format: { name: <string>, calories: <integer> }. You are missing a "name property."`
           );
           done();
       });
