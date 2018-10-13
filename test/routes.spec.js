@@ -57,5 +57,20 @@ describe('API Routes', () => {
           done();
       });
     });
+
+    it('should not create a record with missing data', done => {
+      chai.request(server)
+        .post('/api/v1/foods')
+        .send({
+          name: 'oranges'
+        })
+        .end((err, response) => {
+          response.should.have.status(422);
+          response.body.error.should.equal(
+            `Expected format: { name: <string>, calories: <integer> }. You're missing "integer" property.`
+          );
+          done();
+      });
+    });
   });
 });
