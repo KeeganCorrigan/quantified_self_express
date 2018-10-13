@@ -9,5 +9,19 @@ const database = require('knex')(configuration);
 chai.use(chaiHttp);
 
 describe('API Routes', () => {
+  before((done) => {
+    database.migrate.latest()
+      .then(() => done())
+      .catch(error => {
+        throw error;
+      });
+  });
 
+  beforeEach((done) => {
+    database.seed.run()
+      .then(() => done())
+      .catch(error => {
+        throw error;
+      });
+  });
 });
