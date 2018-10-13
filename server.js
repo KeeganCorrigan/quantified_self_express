@@ -21,6 +21,17 @@ app.get('/api/v1/foods', (request, response) => {
     });
 });
 
+app.get('/api/v1/foods/:id', (request, response) => {
+  database('foods').where('id', request.params.id).select()
+    .then((food) => {
+      if (food.length == 0) { return response.sendStatus(404) }
+      response.status(200).json(food[0]);
+    })
+    .catch((error) => {
+      response.status(500).json( { error } );
+    });
+})
+
 app.post('/api/v1/foods', (request, response) => {
   const food = request.body;
   for (let requiredParameter of ['name', 'calories']) {
