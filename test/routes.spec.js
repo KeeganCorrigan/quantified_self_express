@@ -33,8 +33,7 @@ describe('API Routes', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(1);
-        response.body[0].should.have.property('name');
+        response.body.length.should.equal(1);        response.body[0].should.have.property('name');
         response.body[0].name.should.equal('apple');
         response.body[0].should.have.property('calories');
         response.body[0].calories.should.equal(100);
