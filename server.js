@@ -41,12 +41,9 @@ app.post('/api/v1/foods', (request, response) => {
 
 app.delete('/api/v1/foods/:id', (request, response) => {
   const foodId = request.params.id
-  database('foods').where({ 'id': foodId}).del()
-    .then((result) => {
-      response.status(204).json({  })
-    })
-    .catch(error => {
-      response.status(500).json({ error })
+  database('foods').where({ 'id': foodId }).del()
+    .then(result => {
+      return response.sendStatus(204)
     })
 });
 

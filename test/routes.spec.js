@@ -54,11 +54,10 @@ describe('API Routes', () => {
           .end((err, response) => {
             response.body.length.should.equal(0)
             done();
-          })
-      });
+        })
+      })
     });
   });
-
 
   describe('POST /api/v1/foods', () => {
     it('should create a new food', done => {
