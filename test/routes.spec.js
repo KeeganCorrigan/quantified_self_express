@@ -43,6 +43,22 @@ describe('API Routes', () => {
     });
   });
 
+  describe('DELETE /api/v1/foods/:id', () => {
+    it('should delete an existing food', done => {
+      chai.request(server)
+        .delete('/api/v1/foods/1')
+        .end((err, response) => {
+          response.should.have.status(204)
+          chai.request(server)
+          .get('/api/v1/foods')
+          .end((err, response) => {
+            response.body.length.should.equal(0)
+            done();
+        })
+      })
+    });
+  });
+
   describe('POST /api/v1/foods', () => {
     it('should create a new food', done => {
       chai.request(server)
@@ -73,7 +89,7 @@ describe('API Routes', () => {
           done();
       });
     });
-    
+
     it('should not create a record with missing data', done => {
       chai.request(server)
         .post('/api/v1/foods')

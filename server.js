@@ -37,7 +37,15 @@ app.post('/api/v1/foods', (request, response) => {
     .catch(error => {
       response.status(500).json({ error })
     })
-})
+});
+
+app.delete('/api/v1/foods/:id', (request, response) => {
+  const foodId = request.params.id
+  database('foods').where({ 'id': foodId }).del()
+    .then(result => {
+      return response.sendStatus(204)
+    })
+});
 
 
 module.exports = app;
