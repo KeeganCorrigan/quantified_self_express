@@ -20,7 +20,7 @@ returns a specific food from the database. Returns 404 if food can not be found.
 
 `POST /api/v1/foods`
 
-Adds a new food to the database. Post requests must be made in the following format: `{ name: "Name of food here", calories: "Calories here"} }`.
+Adds a new food to the database. Post requests must be made in the following format: `{ name: "apple", calories: 90 }`.
 
 `DELETE /api/v1/foods/:id`
 
@@ -28,7 +28,7 @@ removes a food from the database.
 
 `PUT /api/v1/foods/:id`
 
-Updates the food name or the calorie amount. Put requests must be made in the following format: `{ food: { name: "Name of food here", calories: "Calories here"} }`
+Updates the food name or the calorie amount. Put requests must be made in the following format: `{ food: { name: "apple", calories: 90 } }`
 
 ### Other notes:
 
