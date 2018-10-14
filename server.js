@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const Food = require('./models/food')
+const FoodsController = require('./controllers/foodsController')
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -12,40 +14,23 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'quantified_self_express';
 
 app.get('/api/v1/foods', (request, response) => {
-  database('foods').select()
-    .then((foods) => {
-      response.status(200).json(foods);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
+  FoodsController.index(request, response)
+});
+
+app.get('/api/v1/foods/:id', (request, response) => {
+  FoodsController.show(request, response)
 });
 
 app.post('/api/v1/foods', (request, response) => {
-  const food = request.body;
-  for (let requiredParameter of ['name', 'calories']) {
-    if (!food[requiredParameter]) {
-      return response.status(422).send({
-        error: `Expected format: { name: <string>, calories: <integer> }. You are missing a "${requiredParameter} property."`
-      })
-    }
-  }
-  database('foods').insert(food, ['id'])
-    .then(food => {
-      response.status(201).json({ id: food[0] })
-    })
-    .catch(error => {
-      response.status(500).json({ error })
-    })
+  FoodsController.create(request, response)
 });
 
 app.delete('/api/v1/foods/:id', (request, response) => {
-  const foodId = request.params.id
-  database('foods').where({ 'id': foodId }).del()
-    .then(result => {
-      return response.sendStatus(204)
-    })
+  FoodsController.delete(request, response)
 });
 
+app.put('/api/v1/foods/:id', (request, response) => {
+  FoodsController.update(request, response)
+});
 
 module.exports = app;
