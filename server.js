@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const Food = require('./models/food')
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -12,7 +13,7 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'quantified_self_express';
 
 app.get('/api/v1/foods', (request, response) => {
-  database('foods').select()
+  Food.all()
     .then((foods) => {
       response.status(200).json(foods);
     })
