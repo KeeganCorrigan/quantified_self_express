@@ -27,6 +27,7 @@ Adds a new food to the database. Post requests must be made in the following for
 removes a food from the database.
 
 `PUT /api/v1/foods/:id`
+
 Updates the food name or the calorie amount. Put requests must be made in the following format: `{ food: { name: "Name of food here", calories: "Calories here"} }`
 
 ### Other notes:
