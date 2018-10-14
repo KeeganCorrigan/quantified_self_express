@@ -47,6 +47,18 @@ module.exports = class FoodsController {
       })
   }
 
+  static update(request, response) {
+    Food.update(request.params.id, request)
+        .then((food) => {
+          response.status(201).json(food[0]);
+        })
+
+        .catch((error) => {
+          response.status(500).json({ error });
+        })
+
+  }
+
   static delete(request,response) {
     const foodId = request.params.id
 

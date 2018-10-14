@@ -18,4 +18,13 @@ module.exports = class Food {
   static delete(foodId) {
     return database('foods').where( { 'id': foodId} ).del()
   }
+
+  static update(foodId, request) {
+    return database('foods').where( { id: request.params.id } )
+      .update({
+        name: request.body.food.name,
+        calories: request.body.food.calories
+      })
+      .returning('*')
+  }
 }

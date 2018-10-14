@@ -57,30 +57,35 @@ describe('API Routes', () => {
       })
     })
 
-    // it('should return 404 if food is not found', done => {
-    //   chai.request(server)
-    //   .get('api/v1/foods/21398')
-    //   .end((err, response) => {
-    //     response.should.have.status(404);
-    //     done();
-    //   })
-    // })
+    it('should return 404 if food is not found', done => {
+      chai.request(server)
+      .get('/api/v1/foods/21398')
+      .end((err, response) => {
+        console.log(err)
+        response.should.have.status(404);
+        done();
+      })
+    })
   })
 
-  // describe('PUT /api/v1/foods/:id', () => {
-  //   it('should update an existing food', done => {
-  //     chai.request(server)
-  //       .put('/api/v1/foods/1')
-  //       .send({
-  //         calories: 86,
-  //         name: 'apple'
-  //       })
-  //       .end((err, response) => {
-  //         response.should.have.status(201)
-  //
-  //       })
-  //   })
-  // })
+  describe('PUT /api/v1/foods/:id', () => {
+    it('should update an existing food', done => {
+      chai.request(server)
+        .put('/api/v1/foods/1')
+        .send({ food: {
+          calories: 86,
+          name: 'apple' }
+        })
+        .end((err, response) => {
+          response.should.have.status(201)
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('name');
+          response.body.should.have.property('calories');
+          done();
+        })
+    })
+  })
 
   describe('DELETE /api/v1/foods/:id', () => {
     it('should delete an existing food', done => {

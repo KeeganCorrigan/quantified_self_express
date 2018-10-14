@@ -19,7 +19,7 @@ app.get('/api/v1/foods', (request, response) => {
 
 app.get('/api/v1/foods/:id', (request, response) => {
   FoodsController.show(request, response)
-})
+});
 
 app.post('/api/v1/foods', (request, response) => {
   FoodsController.create(request, response)
@@ -29,5 +29,8 @@ app.delete('/api/v1/foods/:id', (request, response) => {
   FoodsController.delete(request, response)
 });
 
+app.put('/api/v1/foods/:id', (request, response) => {
+  FoodsController.update(request, response)
+});
 
 module.exports = app;
