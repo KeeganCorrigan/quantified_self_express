@@ -23,7 +23,7 @@ module.exports = class FoodsController {
         response.status(200).json(food[0]);
       })
       .catch((error) => {
-        response.status(500).json( { error } );
+        response.status(500).json({ error });
       });
   }
 
@@ -56,7 +56,6 @@ module.exports = class FoodsController {
         .catch((error) => {
           response.status(500).json({ error });
         })
-
   }
 
   static delete(request,response) {

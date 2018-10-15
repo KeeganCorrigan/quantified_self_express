@@ -25,6 +25,46 @@ describe('API Routes', () => {
     });
   });
 
+  describe('GET /api/v1/meals', () => {
+    it('should return meal and associated foods', done => {
+      chai.request(server)
+      .get('/api/v1/meals')
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('array');
+        response.body[0].should.have.property('id');
+        response.body[0].should.have.property('foods');
+        response.body[0].should.have.property('name');
+        response.body[0].foods.should.be.a('array');
+        response.body[0].foods[0].should.have.property('id');
+        response.body[0].foods[0].should.have.property('name');
+        response.body[0].foods[0].should.have.property('calories');
+        done();
+      })
+    })
+  })
+
+  describe('GET /api/v1/meals/:id', () => {
+    it('should return meal with an array of associated foods', done => {
+      chai.request(server)
+      .get('/api/v1/meals/1')
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('object');
+        response.body.should.have.property('foods');
+        response.body.should.have.property('id');
+        response.body.should.have.property('name');
+        response.body.foods.should.be.a('array');
+        response.body.foods[0].should.have.property('id');
+        response.body.foods[0].should.have.property('name');
+        response.body.foods[0].should.have.property('calories');
+        done();
+      })
+    })
+  })
+
   describe('GET /api/v1/foods', () => {
     it('should return all of the foods', done => {
       chai.request(server)
@@ -33,7 +73,7 @@ describe('API Routes', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(1);
+        response.body.length.should.equal(4);
         response.body[0].should.have.property('name');
         response.body[0].name.should.equal('apple');
         response.body[0].should.have.property('calories');
@@ -96,7 +136,7 @@ describe('API Routes', () => {
           chai.request(server)
           .get('/api/v1/foods')
           .end((err, response) => {
-            response.body.length.should.equal(0)
+            response.body.length.should.equal(3)
             done();
         })
       })
@@ -109,7 +149,8 @@ describe('API Routes', () => {
         .post('/api/v1/foods')
         .send({
           name: 'oranges',
-          calories: 200
+          calories: 200,
+          id: 10
         })
         .end((err, response) => {
           response.should.have.status(201);
