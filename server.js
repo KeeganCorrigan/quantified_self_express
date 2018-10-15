@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const Food = require('./models/food')
 const Meal = require('./models/meal')
 const FoodsController = require('./controllers/foodsController')
+const MealsController = require('./controllers/mealsController')
+
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -15,23 +17,11 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'quantified_self_express';
 
 app.get('/api/v1/meals', (request, response) => {
-    Meal.all()
-    .then((data) => {
-      response.status(200).json(data.rows);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    });
+  MealsController.index(request, response)
 })
 
 app.get('/api/v1/meals/:id', (request, response) => {
-  Meal.find(request.params.id)
-  .then((data) => {
-    response.status(200).json(data.rows[0])
-  })
-  .catch((error) => {
-    response.status(500).json({ error })
-  })
+  MealsController.find(request, response)
 })
 
 app.get('/api/v1/foods', (request, response) => {
