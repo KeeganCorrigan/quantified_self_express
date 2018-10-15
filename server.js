@@ -6,7 +6,6 @@ const Meal = require('./models/meal')
 const FoodsController = require('./controllers/foodsController')
 const MealsController = require('./controllers/mealsController')
 
-
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -36,5 +35,9 @@ app.post('/api/v1/foods', FoodsController.create)
 app.delete('/api/v1/foods/:id', FoodsController.delete)
 
 app.put('/api/v1/foods/:id', FoodsController.update)
+
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
+});
 
 module.exports = app;
