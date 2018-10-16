@@ -1,14 +1,18 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+
 const FoodsController = require('./controllers/foodsController')
 const MealsController = require('./controllers/mealsController')
-const FoodRoutes = require('./routes/food_routes')
+const FoodsRoutes = require('./routes/food_routes')
+// const MealsRoutes = require('./routes/food_routes')
+
 const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
-app.use('/api/v1/foods', FoodRoutes)
+app.use('/api/v1/foods', FoodsRoutes)
+// app.use('/api/v1/meals', MealsRoutes)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
