@@ -65,6 +65,38 @@ describe('API Routes', () => {
     })
   })
 
+  describe('POST /api/v1/meals/:id/foods/:id', () => {
+    it('should post a food to the meal', done => {
+      chai.request(server)
+      .post('/api/v1/meals/1/foods/3')
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.message.should.be.a('string')
+        response.body.message.should.equal("Successfully added Ham Sandwich to Breakfast")
+        done();
+      })
+    })
+
+    it('should not post a food to meal if meal does not exist', done => {
+      chai.request(server)
+      .post('/api/v1/meals/6/foods/3')
+      .end((err, response) => {
+        response.should.have.status(404);
+        done();
+      })
+    })
+
+    it('should not post a food to meal if food does not exist', done => {
+      chai.request(server)
+      .post('/api/v1/meals/1/foods/17')
+      .end((err, response) => {
+        response.should.have.status(404);
+        done();
+      })
+    })
+  })
+
   describe('GET /api/v1/foods', () => {
     it('should return all of the foods', done => {
       chai.request(server)
