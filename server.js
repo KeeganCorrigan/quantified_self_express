@@ -1,26 +1,19 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const Food = require('./models/food')
-const Meal = require('./models/meal')
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
 const FoodsController = require('./controllers/foodsController')
 const MealsController = require('./controllers/mealsController')
+const FoodRoutes = require('./routes/food_routes')
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('./knexfile')[environment]
+const database = require('knex')(configuration)
 
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuration);
+app.use('/api/v1/foods', FoodRoutes)
 
-// const router = express.Router();
-
-// router.get('/', footnotesController.index);
-
-// const footnotes = require('./lib/routes/api/v1/footnotes')
-// app.use('/api/v1/footnotes', footnotes)
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('port', process.env.PORT || 3000);
-app.locals.title = 'quantified_self_express';
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.set('port', process.env.PORT || 3000)
+app.locals.title = 'quantified_self_express'
 
 app.get('/api/v1/meals', MealsController.index)
 
@@ -37,7 +30,7 @@ app.delete('/api/v1/foods/:id', FoodsController.delete)
 app.put('/api/v1/foods/:id', FoodsController.update)
 
 app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-});
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`)
+})
 
-module.exports = app;
+module.exports = app
