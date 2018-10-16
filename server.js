@@ -19,13 +19,7 @@ app.get('/api/v1/meals', MealsController.index)
 
 app.get('/api/v1/meals/:id', MealsController.find)
 
-app.get('/api/v1/foods', FoodsController.index)
-
-app.get('/api/v1/foods/:id', FoodsController.show)
-
 app.post('/api/v1/foods', FoodsController.create)
-
-app.delete('/api/v1/foods/:id', FoodsController.delete)
 
 app.put('/api/v1/foods/:id', FoodsController.update)
 
