@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const FoodsRoutes = require('./routes/food_routes')
 const MealsRoutes = require('./routes/meals_routes')
 const Meal = require('./models/meal')
-const MealFoods = require('./models/mealFoods')
+const MealFoodsController = require('./controllers/mealFoodsController')
 
 const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
@@ -18,11 +18,6 @@ app.locals.title = 'quantified_self_express'
 
 app.use('/api/v1/foods', FoodsRoutes)
 app.use('/api/v1/meals', MealsRoutes)
-
-app.post('/api/v1/meals/:meal_id/foods/:food_id', (request, response) => {
-    MealFoods.create(request, response)
-  })
-
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`)

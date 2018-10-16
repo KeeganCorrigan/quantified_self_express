@@ -1,12 +1,11 @@
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
-const Meal = require('./meal')
-const Food = require('./food')
+const Meal = require('../models/meal')
+const Food = require('../models/food')
 
-module.exports = class MealFoods {
+module.exports = class MealFoodsController {
   static create(request, response) {
-
     Meal.find(request.params.meal_id)
       .then((meal) => {
         if (meal.rows.length === 0) { return response.sendStatus(404) }

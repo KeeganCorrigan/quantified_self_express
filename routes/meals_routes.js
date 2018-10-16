@@ -6,9 +6,13 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 
 const MealsController = require('../controllers/mealsController')
+const MealFoodsController = require('../controllers/mealFoodsController')
+
 
 router.get('/', MealsController.index)
 
 router.get('/:id', MealsController.find)
+
+router.post('/:meal_id/foods/:food_id', MealFoodsController.create)
 
 module.exports = router
