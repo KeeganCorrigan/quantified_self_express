@@ -1,34 +1,34 @@
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const Food = require('../models/food')
 
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('../knexfile')[environment];
-const database = require('knex')(configuration);
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('../knexfile')[environment]
+const database = require('knex')(configuration)
 
 module.exports = class FoodsController {
-  static index(request, response) {
+  static index (request, response) {
     Food.all()
       .then((foods) => {
-        response.status(200).json(foods);
+        response.status(200).json(foods)
       })
       .catch((error) => {
-        response.status(500).json({ error });
-      });
+        response.status(500).json({ error })
+      })
   }
 
-  static show(request, response) {
+  static show (request, response) {
     Food.find(request.params.id)
       .then((food) => {
-        if (food.length == 0) { return response.sendStatus(404) }
-        response.status(200).json(food[0]);
+        if (food.length === 0) { return response.sendStatus(404) }
+        response.status(200).json(food[0])
       })
       .catch((error) => {
-        response.status(500).json({ error });
-      });
+        response.status(500).json({ error })
+      })
   }
 
-  static create(request, response) {
-    const food = request.body;
+  static create (request, response) {
+    const food = request.body
 
     for (let requiredParameter of ['name', 'calories']) {
       if (!food[requiredParameter]) {
@@ -47,18 +47,18 @@ module.exports = class FoodsController {
       })
   }
 
-  static update(request, response) {
+  static update (request, response) {
     Food.update(request.params.id, request)
-        .then((food) => {
-          response.status(201).json(food[0]);
-        })
+      .then((food) => {
+        response.status(201).json(food[0])
+      })
 
-        .catch((error) => {
-          response.status(500).json({ error });
-        })
+      .catch((error) => {
+        response.status(500).json({ error })
+      })
   }
 
-  static delete(request,response) {
+  static delete (request, response) {
     const foodId = request.params.id
 
     Food.delete(foodId)
