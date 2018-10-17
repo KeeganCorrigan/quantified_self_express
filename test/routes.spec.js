@@ -68,7 +68,7 @@ describe('API Routes', () => {
   describe('POST /api/v1/meals/:id/foods/:id', () => {
     it('should post a food to the meal', done => {
       chai.request(server)
-      .post('/api/v1/meals/1/foods/3')
+      .post('/api/v1/meals/1/foods/7')
       .end((err, response) => {
         response.should.have.status(201);
         response.should.be.json;
@@ -80,7 +80,7 @@ describe('API Routes', () => {
 
     it('should not post a food to meal if meal does not exist', done => {
       chai.request(server)
-      .post('/api/v1/meals/6/foods/3')
+      .post('/api/v1/meals/100/foods/6')
       .end((err, response) => {
         response.should.have.status(404);
         done();
@@ -100,7 +100,7 @@ describe('API Routes', () => {
   describe('DELETE /api/v1/meals/:meal_id/foods/:food_id', () => {
     it('should delete mealfood', done => {
       chai.request(server)
-      .delete('/api/v1/meals/1/foods/1')
+      .delete('/api/v1/meals/1/foods/5')
       .end((err, response) => {
         console.log(response)
         response.should.have.status(200);
@@ -132,7 +132,7 @@ describe('API Routes', () => {
   describe('GET /api/v1/foods/:id', () => {
     it('should return food with specified ID', done => {
       chai.request(server)
-      .get('/api/v1/foods/1')
+      .get('/api/v1/foods/5')
       .end((err, response) => {
         response.should.have.status(200);
         response.should.be.json;
@@ -156,7 +156,7 @@ describe('API Routes', () => {
   describe('PUT /api/v1/foods/:id', () => {
     it('should update an existing food', done => {
       chai.request(server)
-        .put('/api/v1/foods/1')
+        .put('/api/v1/foods/5')
         .send({ food: {
           calories: 86,
           name: 'apple' }
@@ -175,7 +175,7 @@ describe('API Routes', () => {
   describe('DELETE /api/v1/foods/:id', () => {
     it('should delete an existing food', done => {
       chai.request(server)
-        .delete('/api/v1/foods/1')
+        .delete('/api/v1/foods/5')
         .end((err, response) => {
           response.should.have.status(204)
           chai.request(server)
@@ -193,14 +193,18 @@ describe('API Routes', () => {
       chai.request(server)
         .post('/api/v1/foods')
         .send({
-          name: 'oranges',
-          calories: 200,
-          id: 10
+          food: {
+            name: 'oranges',
+            calories: 200
+          }
         })
         .end((err, response) => {
+          console.log(response.body)
           response.should.have.status(201);
           response.body.should.be.a('object');
           response.body.should.have.property('id');
+          response.body.should.have.property('calories');
+          response.body.should.have.property('name');
           done();
       });
     });
@@ -209,7 +213,9 @@ describe('API Routes', () => {
       chai.request(server)
         .post('/api/v1/foods')
         .send({
-          name: 'oranges'
+          food: {
+            name: 'oranges'
+          }
         })
         .end((err, response) => {
           response.should.have.status(422);
@@ -224,7 +230,9 @@ describe('API Routes', () => {
       chai.request(server)
         .post('/api/v1/foods')
         .send({
-          calories: 200
+          food: {
+            calories: 200
+          }
         })
         .end((err, response) => {
           response.should.have.status(422);

@@ -28,7 +28,7 @@ module.exports = class FoodsController {
   }
 
   static create (request, response) {
-    const food = request.body
+    const food = request.body.food
 
     for (let requiredParameter of ['name', 'calories']) {
       if (!food[requiredParameter]) {
@@ -39,8 +39,8 @@ module.exports = class FoodsController {
     }
 
     Food.create(food)
-      .then(food => {
-        response.status(201).json({ id: food[0] })
+      .then(data => {
+        response.status(201).json(data[0])
       })
       .catch(error => {
         response.status(500).json({ error })
