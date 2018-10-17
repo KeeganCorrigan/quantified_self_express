@@ -2,7 +2,7 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 
-module.exports = class Meal {
+module.exports = class MealFood {
   static find(meal_id, food_id) {
     return database.raw
       (`

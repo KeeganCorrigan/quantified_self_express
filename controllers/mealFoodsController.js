@@ -25,16 +25,22 @@ module.exports = class MealFoodsController {
   }
 
   static delete(request, response) {
-      MealFoods.find(request.params.meal_id, request.params.food_id)
-        .then((data) => {
-          if (data.rows.length === 0) { return response.sendStatus(404) }
-          MealFoods.delete(data.rows[0].mealfoods_id).returning("*")
-          .then((food) => {
-            response.send( { message: `Successfully removed ${data.rows[0].food_name} from ${data.rows[0].meal_name}` } )
-          })
-        })
-        .catch((error) => {
-          response.status(500).json( { error } )
-        })
+    database("mealfoods").where({food_id: request.params.food_id}).where({meal_id: request.params.meal_id}).del().returning("*")
+      .then((data) => {
+        response.send( { message: `Successfully removed food`} )
+      })
     }
+
+    //   MealFoods.find(request.params.meal_id, request.params.food_id)
+    //     .then((data) => {
+    //       if (data.rows.length === 0) { return response.sendStatus(404) }
+    //       MealFoods.delete(data.rows[0].mealfoods_id).returning("*")
+    //       .then((food) => {
+    //         response.send( { message: `Successfully removed ${data.rows[0].food_name} from ${data.rows[0].meal_name}` } )
+    //       })
+    //     })
+    //     .catch((error) => {
+    //       response.status(500).json( { error } )
+    //     })
+    // }
 }
