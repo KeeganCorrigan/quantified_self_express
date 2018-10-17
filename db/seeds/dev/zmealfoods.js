@@ -6,6 +6,10 @@ exports.seed = function(knex, Promise) {
         {meal_id: 1, food_id: 6},
         {meal_id: 2, food_id: 7},
         {meal_id: 2, food_id: 8},
+        {meal_id: 3, food_id: 7},
+        {meal_id: 3, food_id: 8},
+        {meal_id: 4, food_id: 7},
+        {meal_id: 4, food_id: 8},
       ]);
   })
 }
