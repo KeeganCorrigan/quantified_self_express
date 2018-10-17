@@ -13,38 +13,16 @@ module.exports = class MealFoodsController {
         response.status(201).json( {"message": `Successfully added food to meal`} )
       })
     }
-    // Meal.find(request.params.meal_id)
-    //   .then((meal) => {
-    //     if (meal.rows.length === 0) { return response.sendStatus(404) }
-    //     Food.find(request.params.food_id)
-    //     .then((food) => {
-    //       if (food.length === 0) { return response.sendStatus(404) }
-    //       database('mealfoods').insert( [{ meal_id: request.params.meal_id }, { food_id: request.params.food_id }]
-    //        )
-    //       response.status(201).json( {"message": `Successfully added ${food[0].name} to ${meal.rows[0].name}`} )
-    //     })
-    //   })
-    //   .catch((error) => {
-    //     response.status(500).json( { error } )
-    //   })
+
 
   static delete(request, response) {
-    database("mealfoods").where({food_id: request.params.food_id}).where({meal_id: request.params.meal_id}).del().returning("*")
+    return database("mealfoods").where({food_id: request.params.food_id}).where({meal_id: request.params.meal_id})
       .then((data) => {
-        response.send( { message: `Successfully removed food`} )
-      })
+        database("mealfoods").where({ id: data[0].id }).del()
+          .then((data) => {
+            response.send( { message: `Successfully removed food`} )
+          })
+        })
     }
 
-    //   MealFoods.find(request.params.meal_id, request.params.food_id)
-    //     .then((data) => {
-    //       if (data.rows.length === 0) { return response.sendStatus(404) }
-    //       MealFoods.delete(data.rows[0].mealfoods_id).returning("*")
-    //       .then((food) => {
-    //         response.send( { message: `Successfully removed ${data.rows[0].food_name} from ${data.rows[0].meal_name}` } )
-    //       })
-    //     })
-    //     .catch((error) => {
-    //       response.status(500).json( { error } )
-    //     })
-    // }
 }
