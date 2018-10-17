@@ -102,7 +102,6 @@ describe('API Routes', () => {
       chai.request(server)
       .delete('/api/v1/meals/1/foods/5')
       .end((err, response) => {
-        console.log(response)
         response.should.have.status(200);
         response.body.should.have.property('message')
         response.body.message.should.equal("Successfully removed apple from Breakfast")
@@ -199,7 +198,6 @@ describe('API Routes', () => {
           }
         })
         .end((err, response) => {
-          console.log(response.body)
           response.should.have.status(201);
           response.body.should.be.a('object');
           response.body.should.have.property('id');
