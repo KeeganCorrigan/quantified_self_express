@@ -4,7 +4,7 @@ const database = require('knex')(configuration);
 
 module.exports = class Food {
   static all() {
-    return database('foods').select()
+    return database('foods').select().orderBy('id', 'asc')
   }
 
   static find(id) {
