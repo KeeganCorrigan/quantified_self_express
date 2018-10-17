@@ -13,6 +13,7 @@ module.exports = class Meal {
         JOIN mealfoods ON meals.id = mealfoods.meal_id
         JOIN foods ON mealfoods.food_id = foods.id
         GROUP BY meals.id
+        ORDER BY meals.id ASC
       `)
   }
 
