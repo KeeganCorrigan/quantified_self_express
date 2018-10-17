@@ -70,7 +70,7 @@ describe('API Routes', () => {
       chai.request(server)
       .post('/api/v1/meals/1/foods/3')
       .end((err, response) => {
-        response.should.have.status(200);
+        response.should.have.status(201);
         response.should.be.json;
         response.body.message.should.be.a('string')
         response.body.message.should.equal("Successfully added Ham Sandwich to Breakfast")
@@ -92,6 +92,20 @@ describe('API Routes', () => {
       .post('/api/v1/meals/1/foods/17')
       .end((err, response) => {
         response.should.have.status(404);
+        done();
+      })
+    })
+  })
+
+  describe('DELETE /api/v1/meals/:meal_id/foods/:food_id', () => {
+    it('should delete mealfood', done => {
+      chai.request(server)
+      .delete('/api/v1/meals/1/foods/1')
+      .end((err, response) => {
+        console.log(response)
+        response.should.have.status(200);
+        response.body.should.have.property('message')
+        response.body.message.should.equal("Successfully removed apple from Breakfast")
         done();
       })
     })
@@ -133,7 +147,6 @@ describe('API Routes', () => {
       chai.request(server)
       .get('/api/v1/foods/21398')
       .end((err, response) => {
-        console.log(err)
         response.should.have.status(404);
         done();
       })

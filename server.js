@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 
 const FoodsRoutes = require('./routes/food_routes')
 const MealsRoutes = require('./routes/meals_routes')
-const Meal = require('./models/meal')
-const MealFoodsController = require('./controllers/mealFoodsController')
 
 const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
