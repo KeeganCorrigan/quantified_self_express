@@ -82,7 +82,7 @@ describe('API Routes', () => {
   describe('DELETE /api/v1/meals/:meal_id/foods/:food_id', () => {
     it('should delete mealfood', done => {
       chai.request(server)
-      .delete('/api/v1/meals/1/foods/5')
+      .delete('/api/v1/meals/1/foods/6')
       .end((err, response) => {
         response.should.have.status(200);
         response.body.should.have.property('message')
