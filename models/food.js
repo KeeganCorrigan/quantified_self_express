@@ -12,7 +12,7 @@ module.exports = class Food {
   }
 
   static create(food) {
-    return database('foods').insert(food, ['id'])
+    return database("foods").insert(food).returning("*")
   }
 
   static delete(foodId) {
