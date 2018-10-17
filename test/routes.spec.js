@@ -73,25 +73,7 @@ describe('API Routes', () => {
         response.should.have.status(201);
         response.should.be.json;
         response.body.message.should.be.a('string')
-        response.body.message.should.equal("Successfully added Ham Sandwich to Breakfast")
-        done();
-      })
-    })
-
-    it('should not post a food to meal if meal does not exist', done => {
-      chai.request(server)
-      .post('/api/v1/meals/100/foods/6')
-      .end((err, response) => {
-        response.should.have.status(404);
-        done();
-      })
-    })
-
-    it('should not post a food to meal if food does not exist', done => {
-      chai.request(server)
-      .post('/api/v1/meals/1/foods/17')
-      .end((err, response) => {
-        response.should.have.status(404);
+        response.body.message.should.equal("Successfully added food to meal")
         done();
       })
     })
@@ -104,7 +86,7 @@ describe('API Routes', () => {
       .end((err, response) => {
         response.should.have.status(200);
         response.body.should.have.property('message')
-        response.body.message.should.equal("Successfully removed apple from Breakfast")
+        response.body.message.should.equal("Successfully removed food")
         done();
       })
     })
