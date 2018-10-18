@@ -16,6 +16,10 @@ module.exports = class MealFood {
   }
 
   static delete(id) {
-    return database("mealfoods").del({ id: id })
+    return database("mealfoods").where({ id: id }).del().returning("*")
+  }
+
+  static create(food_id, meal_id) {
+    return database("mealfoods").insert({food_id: food_id, meal_id: meal_id}, 'id').returning("*")
   }
 }

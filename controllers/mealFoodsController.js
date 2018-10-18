@@ -7,22 +7,44 @@ const Food = require('../models/food')
 const MealFoods = require('../models/mealfoods')
 
 module.exports = class MealFoodsController {
-  static create(request, response) {
-    database("mealfoods").insert({food_id: request.params.food_id, meal_id: request.params.meal_id}, 'id')
-      .then((data) => {
-        response.status(201).json( {"message": `Successfully added food to meal`} )
-      })
+  static async create(request, response) {
+    try {
+      const foodId = request.params.food_id
+      const mealId = request.params.meal_id
+
+      const food = await Food.find(foodId)
+      if (food.length === 0) { return response.sendStatus(404) }
+
+      const meal = await Meal.find(mealId)
+      if (meal.rows.length === 0) { return response.sendStatus(404) }
+
+      const createdFood = await MealFoods.create(foodId, mealId)
+
+      response.status(201).json( {"message": `Successfully added ${food[0].name} to ${meal.rows[0].name}`} )
+    } catch(error) {
+      response.status(500).json({ error })
     }
+  }
 
+  static async delete(request, response) {
+    try {
+      const foodId = request.params.food_id
+      const mealId = request.params.meal_id
 
-  static delete(request, response) {
-    return database("mealfoods").where({food_id: request.params.food_id}).where({meal_id: request.params.meal_id})
-      .then((data) => {
-        database("mealfoods").where({ id: data[0].id }).del()
-          .then((data) => {
-            response.send( { message: `Successfully removed food`} )
-          })
-        })
+      const food = await Food.find(foodId)
+      if (food.length === 0) { return response.sendStatus(404) }
+
+      const meal = await Meal.find(mealId)
+      if (meal.rows.length === 0) { return response.sendStatus(404) }
+
+      const mealfood = await database("mealfoods").where({food_id: foodId}).where({meal_id: mealId})
+
+      const deleted = await MealFoods.delete(mealfood[0].id)
+
+      response.json( {"message": `Successfully removed ${food[0].name} from ${meal.rows[0].name}`} )
+
+    } catch(error) {
+      response.status(500).json({ error })
     }
-
+  }
 }

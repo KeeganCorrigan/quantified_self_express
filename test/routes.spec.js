@@ -63,6 +63,15 @@ describe('API Routes', () => {
         done();
       })
     })
+
+    it('should return 404 if meal not found', done => {
+      chai.request(server)
+      .get('/api/v1/meals/8')
+      .end((err, response) => {
+        response.should.have.status(404);
+        done();
+      })
+    })
   })
 
   describe('POST /api/v1/meals/:id/foods/:id', () => {
@@ -73,7 +82,25 @@ describe('API Routes', () => {
         response.should.have.status(201);
         response.should.be.json;
         response.body.message.should.be.a('string')
-        response.body.message.should.equal("Successfully added food to meal")
+        response.body.message.should.equal("Successfully added Ham Sandwich to Breakfast")
+        done();
+      })
+    })
+
+    it('should return 404 if food not found', done => {
+      chai.request(server)
+      .post('/api/v1/meals/1/foods/1')
+      .end((err, response) => {
+        response.should.have.status(404);
+        done();
+      })
+    })
+
+    it('should return 404 if meal not found', done => {
+      chai.request(server)
+      .post('/api/v1/meals/100/foods/7')
+      .end((err, response) => {
+        response.should.have.status(404);
         done();
       })
     })
@@ -86,7 +113,25 @@ describe('API Routes', () => {
       .end((err, response) => {
         response.should.have.status(200);
         response.body.should.have.property('message')
-        response.body.message.should.equal("Successfully removed food")
+        response.body.message.should.equal("Successfully removed banana from Breakfast")
+        done();
+      })
+    })
+
+    it('should return 404 if food not found', done => {
+      chai.request(server)
+      .post('/api/v1/meals/1/foods/1')
+      .end((err, response) => {
+        response.should.have.status(404);
+        done();
+      })
+    })
+
+    it('should return 404 if meal not found', done => {
+      chai.request(server)
+      .post('/api/v1/meals/6/foods/1')
+      .end((err, response) => {
+        response.should.have.status(404);
         done();
       })
     })

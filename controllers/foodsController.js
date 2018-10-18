@@ -6,25 +6,24 @@ const configuration = require('../knexfile')[environment]
 const database = require('knex')(configuration)
 
 module.exports = class FoodsController {
-  static index (request, response) {
-    Food.all()
-      .then((foods) => {
-        response.status(200).json(foods)
-      })
-      .catch((error) => {
-        response.status(500).json({ error })
-      })
+  static async index (request, response) {
+    try {
+      const foods = await Food.all()
+      response.status(200).json(foods)
+    } catch(error) {
+      response.status(500).json({ error })
+    }
   }
 
-  static show (request, response) {
-    Food.find(request.params.id)
-      .then((food) => {
-        if (food.length === 0) { return response.sendStatus(404) }
-        response.status(200).json(food[0])
-      })
-      .catch((error) => {
-        response.status(500).json({ error })
-      })
+  static async show (request, response) {
+    try {
+      const food = await Food.find(request.params.id)
+      if (food.length === 0) { return response.sendStatus(404) }
+      response.status(200).json(food[0])
+    } catch(error) {
+      response.status(500).json({ error })
+    }
+
   }
 
   static create (request, response) {
