@@ -2,6 +2,10 @@
 
 Quantified Self Express is a restful express API for a calorie tracker app. For more information about the specific end points, see below!
 
+Deployed at:
+
+http://warm-cove-85701.herokuapp.com
+
 ### Technologies:
 
 * Node 8.12.0
