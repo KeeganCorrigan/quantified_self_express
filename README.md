@@ -13,6 +13,26 @@ http://warm-cove-85701.herokuapp.com
 * Knex 0.15.2
 * Postgres
 
+### Setup
+
+To clone this repo:
+
+`$ git clone https://github.com/KeeganCorrigan/quantified_self_express.git`
+
+and then change into the directory.
+
+Installing packages:
+
+`$ npm install`
+
+Running the test suite:
+
+`$ mocha --exit`
+
+*Special Notes:*
+
+Express app is designed with MVC in mind. 
+
 ## End Points
 
 ### Food End Points
