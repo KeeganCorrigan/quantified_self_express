@@ -29,6 +29,8 @@ Running the test suite:
 
 `$ mocha --exit`
 
+The test suite will migrate and seed database.
+
 *Special Notes:*
 
 Express app is designed with MVC in mind. 
