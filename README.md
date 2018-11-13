@@ -1,6 +1,6 @@
 # quantified_self_express:
 
-Quantified Self Express is a restful express API for a calorie tracker app. For more information about the specific end points, see below!
+Quantified Self Express is a restful express API for a calorie tracker app. For more information about the specific end points, see below! The front end is located at this repo: https://github.com/KeeganCorrigan/qs_fs_redo
 
 Deployed at:
 
